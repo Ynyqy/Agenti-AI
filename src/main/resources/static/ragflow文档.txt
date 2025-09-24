@@ -1,0 +1,361 @@
+使用聊天助手创建会话
+发布 /api/v1/chats/{chat_id}/sessions
+
+创建与聊天助手的会话。
+
+请求
+方式：POST
+网址：/api/v1/chats/{chat_id}/sessions
+头：
+'content-Type: application/json'
+'Authorization: Bearer <YOUR_API_KEY>'
+身体：
+"name":string
+"user_id"：（可选）string
+请求示例
+curl --request POST \
+     --url http://{address}/api/v1/chats/{chat_id}/sessions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '
+     {
+          "name": "new session"
+     }'
+请求参数
+chat_id：（路径参数）
+关联聊天助手的 ID。
+"name"：（Body 参数），
+要创建的聊天会话的名称。string
+"user_id"：（正文参数），
+可选的用户定义 ID。string
+响应
+成功：
+
+{
+    "code": 0,
+    "data": {
+        "chat_id": "2ca4b22e878011ef88fe0242ac120005",
+        "create_date": "Fri, 11 Oct 2024 08:46:14 GMT",
+        "create_time": 1728636374571,
+        "id": "4606b4ec87ad11efbc4f0242ac120006",
+        "messages": [
+            {
+                "content": "Hi! I am your assistant, can I help you?",
+                "role": "assistant"
+            }
+        ],
+        "name": "new session",
+        "update_date": "Fri, 11 Oct 2024 08:46:14 GMT",
+        "update_time": 1728636374571
+    }
+}
+失败：
+
+{
+    "code": 102,
+    "message": "Name cannot be empty."
+}
+更新聊天助手的会话
+放 /api/v1/chats/{chat_id}/sessions/{session_id}
+
+更新指定聊天助手的会话。
+
+请求
+方法：PUT
+网址：/api/v1/chats/{chat_id}/sessions/{session_id}
+头：
+'content-Type: application/json'
+'Authorization: Bearer <YOUR_API_KEY>'
+身体：
+"name:string
+"user_id：（可选）string
+请求示例
+curl --request PUT \
+     --url http://{address}/api/v1/chats/{chat_id}/sessions/{session_id} \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '
+     {
+          "name": "<REVISED_SESSION_NAME_HERE>"
+     }'
+请求参数
+chat_id：（路径参数）
+关联聊天助手的 ID。
+session_id：（路径参数）
+要更新的会话的 ID。
+"name"： （正文参数），
+会话的修订名称。string
+"user_id"：（正文参数），
+可选的用户定义 ID。string
+响应
+成功：
+
+{
+    "code": 0
+}
+失败：
+
+{
+    "code": 102,
+    "message": "Name cannot be empty."
+}
+列出聊天助手的会话
+获取 /api/v1/chats/{chat_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}
+
+列出与指定聊天助手关联的会话。
+
+请求
+方法：GET
+网址：/api/v1/chats/{chat_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}
+头：
+'Authorization: Bearer <YOUR_API_KEY>'
+请求示例
+curl --request GET \
+     --url http://{address}/api/v1/chats/{chat_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id} \
+     --header 'Authorization: Bearer <YOUR_API_KEY>'
+请求参数
+chat_id：（路径参数）
+关联聊天助手的 ID。
+page： （过滤器参数），
+指定将显示会话的页面。默认为 。integer1
+page_size：（过滤器参数），
+每个页面上的会话数。默认为 。integer30
+orderby： （过滤器参数），
+会话排序所依据的字段。可用选项：string
+create_time（默认）
+update_time
+desc： （过滤器参数），
+指示是否应按降序对检索到的会话进行排序。默认为 。booleantrue
+name：（筛选器参数）
+要检索的聊天会话的名称。string
+id：（过滤器参数），
+要检索的聊天会话的 ID。string
+user_id：（过滤器参数），
+创建会话时传入的可选用户定义 ID。string
+响应
+成功：
+
+{
+    "code": 0,
+    "data": [
+        {
+            "chat": "2ca4b22e878011ef88fe0242ac120005",
+            "create_date": "Fri, 11 Oct 2024 08:46:43 GMT",
+            "create_time": 1728636403974,
+            "id": "578d541e87ad11ef96b90242ac120006",
+            "messages": [
+                {
+                    "content": "Hi! I am your assistant, can I help you?",
+                    "role": "assistant"
+                }
+            ],
+            "name": "new session",
+            "update_date": "Fri, 11 Oct 2024 08:46:43 GMT",
+            "update_time": 1728636403974
+        }
+    ]
+}
+失败：
+
+{
+    "code": 102,
+    "message": "The session doesn't exist"
+}
+删除聊天助手的会话
+删除 /api/v1/chats/{chat_id}/sessions
+
+按 ID 删除聊天助手的会话。
+
+请求
+方法：删除
+网址：/api/v1/chats/{chat_id}/sessions
+头：
+'content-Type: application/json'
+'Authorization: Bearer <YOUR_API_KEY>'
+身体：
+"ids":list[string]
+请求示例
+curl --request DELETE \
+     --url http://{address}/api/v1/chats/{chat_id}/sessions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '
+     {
+          "ids": ["test_1", "test_2"]
+     }'
+请求参数
+chat_id：（路径参数）
+关联聊天助手的 ID。
+"ids"： （正文参数），
+要删除的会话的 ID。如果未指定，则将删除与指定聊天助手关联的所有会话。list[string]
+响应
+成功：
+
+{
+    "code": 0
+}
+失败：
+
+{
+    "code": 102,
+    "message": "The chat doesn't own the session"
+}
+与聊天助手交谈
+发布 /api/v1/chats/{chat_id}/completions
+
+向指定的聊天助手提问以开始 AI 驱动的对话。
+
+：：：提示注意
+
+在流模式下，并非所有响应都包含引用，因为这取决于系统的判断。
+
+在流式处理模式下，最后一条消息是一条空消息：
+
+data:
+{
+  "code": 0,
+  "data": true
+}
+:::
+
+请求
+方式：POST
+网址：/api/v1/chats/{chat_id}/completions
+头：
+'content-Type: application/json'
+'Authorization: Bearer <YOUR_API_KEY>'
+身体：
+"question":string
+"stream":boolean
+"session_id"：（可选）string
+"user_id：（可选）string
+请求示例
+curl --request POST \
+     --url http://{address}/api/v1/chats/{chat_id}/completions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data-binary '
+     {
+     }'
+curl --request POST \
+     --url http://{address}/api/v1/chats/{chat_id}/completions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data-binary '
+     {
+          "question": "Who are you",
+          "stream": true,
+          "session_id":"9fa7691cb85c11ef9c5f0242ac120005"
+     }'
+请求参数
+chat_id：（路径参数）
+关联聊天助手的 ID。
+"question"： （正文参数）， ， 必填
+启动 AI 驱动的对话的问题。string
+"stream"： （正文参数），
+指示是否以流式方式输出响应：boolean
+true：启用流式处理（默认）。
+false：禁用流媒体。
+"session_id"：（正文参数）
+会话的 ID。如果未提供，将生成一个新会话。
+"user_id"： （Body 参数），
+可选的用户定义 ID。仅当未提供任何 ID 时才有效。stringsession_id
+响应
+成功没有：session_id
+
+data:{
+    "code": 0,
+    "message": "",
+    "data": {
+        "answer": "Hi! I'm your assistant. What can I do for you?",
+        "reference": {},
+        "audio_binary": null,
+        "id": null,
+        "session_id": "b01eed84b85611efa0e90242ac120005"
+    }
+}
+data:{
+    "code": 0,
+    "message": "",
+    "data": true
+}
+成功案例：session_id
+
+data:{
+    "code": 0,
+    "data": {
+        "answer": "I am an intelligent assistant designed to help answer questions by summarizing content from a",
+        "reference": {},
+        "audio_binary": null,
+        "id": "a84c5dd4-97b4-4624-8c3b-974012c8000d",
+        "session_id": "82b0ab2a9c1911ef9d870242ac120006"
+    }
+}
+data:{
+    "code": 0,
+    "data": {
+        "answer": "I am an intelligent assistant designed to help answer questions by summarizing content from a knowledge base. My responses are based on the information available in the knowledge base and",
+        "reference": {},
+        "audio_binary": null,
+        "id": "a84c5dd4-97b4-4624-8c3b-974012c8000d",
+        "session_id": "82b0ab2a9c1911ef9d870242ac120006"
+    }
+}
+data:{
+    "code": 0,
+    "data": {
+        "answer": "I am an intelligent assistant designed to help answer questions by summarizing content from a knowledge base. My responses are based on the information available in the knowledge base and any relevant chat history.",
+        "reference": {},
+        "audio_binary": null,
+        "id": "a84c5dd4-97b4-4624-8c3b-974012c8000d",
+        "session_id": "82b0ab2a9c1911ef9d870242ac120006"
+    }
+}
+data:{
+    "code": 0,
+    "data": {
+        "answer": "I am an intelligent assistant designed to help answer questions by summarizing content from a knowledge base ##0$$. My responses are based on the information available in the knowledge base and any relevant chat history.",
+        "reference": {
+            "total": 1,
+            "chunks": [
+                {
+                    "id": "faf26c791128f2d5e821f822671063bd",
+                    "content": "xxxxxxxx",
+                    "document_id": "dd58f58e888511ef89c90242ac120006",
+                    "document_name": "1.txt",
+                    "dataset_id": "8e83e57a884611ef9d760242ac120006",
+                    "image_id": "",
+                    "url": null,
+                    "similarity": 0.7,
+                    "vector_similarity": 0.0,
+                    "term_similarity": 1.0,
+                    "doc_type": [],
+                    "positions": [
+                        ""
+                    ]
+                }
+            ],
+            "doc_aggs": [
+                {
+                    "doc_name": "1.txt",
+                    "doc_id": "dd58f58e888511ef89c90242ac120006",
+                    "count": 1
+                }
+            ]
+        },
+        "prompt": "xxxxxxxxxxx",
+        "created_at": 1755055623.6401553,
+        "id": "a84c5dd4-97b4-4624-8c3b-974012c8000d",
+        "session_id": "82b0ab2a9c1911ef9d870242ac120006"
+    }
+}
+data:{
+    "code": 0,
+    "data": true
+}
+失败：
+
+{
+    "code": 102,
+    "message": "Please input your question."
+}
